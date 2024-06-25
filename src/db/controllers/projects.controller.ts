@@ -24,12 +24,24 @@ export const ProjectsController = {
       createdAt: new Date(),
       updatedAt: null,
     };
-    projects.push(project);
     console.log(project);
+    projects.push(project);
     return projects.find((p) => p.id === id) ?? null;
   },
   async getBySlug(slug: string): Promise<Project | null> {
     await new Promise((resolve, _) => setTimeout(() => resolve(true), 500));
     return projects.find((p) => p.slug === slug) ?? null;
+  },
+  async updateProjectDate(
+    id: number,
+    startDate: Date,
+    targetDate: Date
+  ): Promise<Project | null> {
+    const index = projects.findIndex((p) => p.id === id);
+    if (index === -1) return null;
+    projects[index].startDate = startDate;
+    projects[index].targetDate = targetDate;
+    await new Promise((resolve, _) => setTimeout(() => resolve(true), 100));
+    return projects[index];
   },
 };
